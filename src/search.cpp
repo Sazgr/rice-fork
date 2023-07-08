@@ -491,18 +491,6 @@ int negamax(int alpha, int beta, int depth, SearchThread& st, SearchStack *ss, b
 						ss->double_extensions = (ss - 1)->double_extensions + 1;
                 }
             }
-            else if (singular_beta >= beta)
-            {
-                return (singular_beta); // Multicut
-            }
-            else if (tte.score >= beta)
-            {
-                extension = -2;
-            }else if (tte.score <= singular_score){
-                extension = -1;
-            }else if (cutnode){
-                extension = -1;
-            }
         }
 
         /* Initialize new depth based on extension*/
