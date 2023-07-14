@@ -127,15 +127,20 @@ struct SearchThread{
     }
 };
 
+extern int RFPBase;
 extern int RFPMargin;
 extern int RFPImprovingBonus;
-extern int RFPDepth;
 extern int LMRBase;
 extern int LMRDivision;
 
 extern int NMPBase;
 extern int NMPDivision;
 extern int NMPMargin;
+
+extern float LMP0Base;
+extern float LMP0Quadratic;
+extern float LMP1Base;
+extern float LMP1Quadratic;
 
 void init_search();
 

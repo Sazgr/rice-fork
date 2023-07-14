@@ -12,16 +12,32 @@
 #include <iostream>
 #include <sstream>
 
-bool TUNING = false;
+bool TUNING = true;
 
 void print_tuning_parameter(std::string str, int value) {
     std::cout << "option name " << str << " type spin default " << value << " min -100000 max 100000" << std::endl;
 }
 
+void print_tuning_parameter(std::string str, float value) {
+    std::cout << "option name " << str << " type spin default " << static_cast<int>(value * 100) << " min -100000 max 100000" << std::endl;
+}
+
 void print_tuning_parameters() {
+    print_tuning_parameter("RFPBase", RFPBase);
     print_tuning_parameter("RFPMargin", RFPMargin);
     print_tuning_parameter("RFPImproving", RFPImprovingBonus);
-    print_tuning_parameter("RFPDepth", RFPDepth);
+
+    print_tuning_parameter("LMRBase", LMRBase);
+    print_tuning_parameter("LMRDivision", LMRDivision);
+
+    print_tuning_parameter("NMPBase", NMPBase);
+    print_tuning_parameter("NMPDivison", NMPDivision);
+    print_tuning_parameter("NMPMargin", NMPMargin);
+
+    print_tuning_parameter("LMP0Base", LMP0Base);
+    print_tuning_parameter("LMP0Quadratic", LMP0Quadratic);
+    print_tuning_parameter("LMP1Base", LMP1Base);
+    print_tuning_parameter("LMP1Quadratic", LMP1Quadratic);
 }
 
 static void uci_send_id() {
@@ -43,6 +59,15 @@ static void set_option(std::istream &is, std::string &token, std::string name, i
         is >> std::skipws >> token;
 
         value = std::stoi(token);
+    }
+}
+
+static void set_option(std::istream &is, std::string &token, std::string name, float &value) {
+    if (token == name) {
+        is >> std::skipws >> token;
+        is >> std::skipws >> token;
+
+        value = std::stoi(token) / 100.0;
     }
 }
 
@@ -258,9 +283,9 @@ void uci_loop(int argv, char **argc) {
             set_option(is, token, "Hash", CurrentHashSize);
 
             // Tuner related options
+            set_option(is, token, "RFPBase", RFPBase);
             set_option(is, token, "RFPMargin", RFPMargin);
             set_option(is, token, "RFPImproving", RFPImprovingBonus);
-            set_option(is, token, "RFPDepth", RFPDepth);
 
             set_option(is, token, "LMRBase", LMRBase);
             set_option(is, token, "LMRDivision", LMRDivision);
@@ -268,6 +293,11 @@ void uci_loop(int argv, char **argc) {
             set_option(is, token, "NMPBase", NMPBase);
             set_option(is, token, "NMPDivison", NMPDivision);
             set_option(is, token, "NMPMargin", NMPMargin);
+
+            set_option(is, token, "LMP0Base", LMP0Base);
+            set_option(is, token, "LMP0Quadratic", LMP0Quadratic);
+            set_option(is, token, "LMP1Base", LMP1Base);
+            set_option(is, token, "LMP1Quadratic", LMP1Quadratic);
 
             init_search();
 

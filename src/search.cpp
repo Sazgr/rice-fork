@@ -30,8 +30,8 @@ void init_search()
 
     for (int depth = 1; depth < 8; depth++)
     {
-        lmp_table[0][depth] = 2.5 + 2 * depth * depth / 4.5;
-        lmp_table[1][depth] = 4.0 + 4 * depth * depth / 4.5;
+        lmp_table[0][depth] = LMP0Base + depth * depth / LMP0Quadratic;
+        lmp_table[1][depth] = LMP0Base + depth * depth / LMP0Quadratic;
     }
 }
 
@@ -278,7 +278,7 @@ int negamax(int alpha, int beta, int depth, SearchThread& st, SearchStack *ss, b
          * If the eval is well above beta by a margin, then we assume the eval
          * will hold above beta.
          */
-        if (depth < 9 && eval >= beta && eval - ((depth - improving) * 77) - (ss - 1)->stat_score/400 >= beta)
+        if (depth < 9 && eval >= beta && eval - RFPBase - depth * RFPMargin - improving * RFPImprovingBonus - (ss - 1)->stat_score/400 >= beta)
         {
             return eval;
         }
@@ -630,7 +630,7 @@ int negamax(int alpha, int beta, int depth, SearchThread& st, SearchStack *ss, b
     {
         if (in_check)
         {
-            return -ISMATE + ss->ply; // Checkmate
+            return -INF_BOUND + ss->ply; // Checkmate
         }
         else
         {
