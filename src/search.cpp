@@ -278,7 +278,7 @@ int negamax(int alpha, int beta, int depth, SearchThread& st, SearchStack *ss, b
          * If the eval is well above beta by a margin, then we assume the eval
          * will hold above beta.
          */
-        if (depth < 9 && eval >= beta && eval - RFPBase - depth * RFPMargin - improving * RFPImprovingBonus - (ss - 1)->stat_score/400 >= beta)
+        if (depth < 9 && eval >= beta && eval - depth * RFPMargin - improving * RFPImprovingBonus - (ss - 1)->stat_score/400 >= beta)
         {
             return eval;
         }

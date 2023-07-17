@@ -127,7 +127,6 @@ struct SearchThread{
     }
 };
 
-extern int RFPBase;
 extern int RFPMargin;
 extern int RFPImprovingBonus;
 extern int LMRBase;

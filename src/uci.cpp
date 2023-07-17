@@ -23,7 +23,6 @@ void print_tuning_parameter(std::string str, float value) {
 }
 
 void print_tuning_parameters() {
-    print_tuning_parameter("RFPBase", RFPBase);
     print_tuning_parameter("RFPMargin", RFPMargin);
     print_tuning_parameter("RFPImproving", RFPImprovingBonus);
 
@@ -283,7 +282,6 @@ void uci_loop(int argv, char **argc) {
             set_option(is, token, "Hash", CurrentHashSize);
 
             // Tuner related options
-            set_option(is, token, "RFPBase", RFPBase);
             set_option(is, token, "RFPMargin", RFPMargin);
             set_option(is, token, "RFPImproving", RFPImprovingBonus);
 
