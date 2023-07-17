@@ -313,7 +313,7 @@ int negamax(int alpha, int beta, int depth, SearchThread& st, SearchStack *ss, b
          * If the eval is well above beta by a margin, then we assume the eval
          * will hold above beta.
          */
-        if (depth < 9 && eval >= beta && eval - ((depth - improving) * 77) - (ss - 1)->stat_score/400 >= beta)
+        if (depth < 9 && eval >= beta && eval - static_cast<int>(60 * std::pow(depth + !improving, 0.7)) - (ss - 1)->stat_score/400 >= beta)
         {
             return eval;
         }
